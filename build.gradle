@@ -1,0 +1,71 @@
+plugins {
+    id 'java-library'
+    id 'maven-publish'
+    id 'signing'
+}
+
+group = 'com.ekddigital'
+version = '1.1.0'
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
+    withSourcesJar()
+    withJavadocJar()
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    // HTTP Client
+    implementation 'com.squareup.okhttp3:okhttp:4.12.0'
+    
+    // JSON Processing
+    implementation 'com.fasterxml.jackson.core:jackson-databind:2.15.3'
+    implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.15.3'
+    
+    // Testing
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.10.1'
+    testImplementation 'com.squareup.okhttp3:mockwebserver:4.12.0'
+}
+
+test {
+    useJUnitPlatform()
+}
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            from components.java
+            
+            pom {
+                name = 'EKDSend Java SDK'
+                description = 'Official Java SDK for the EKDSend API'
+                url = 'https://github.com/ekddigital/ekdsend-java'
+                
+                licenses {
+                    license {
+                        name = 'MIT License'
+                        url = 'https://opensource.org/licenses/MIT'
+                    }
+                }
+                
+                developers {
+                    developer {
+                        id = 'ekddigital'
+                        name = 'EKD Digital'
+                        email = 'support@ekddigital.com'
+                    }
+                }
+                
+                scm {
+                    connection = 'scm:git:git://github.com/ekddigital/ekdsend-java.git'
+                    developerConnection = 'scm:git:ssh://github.com:ekddigital/ekdsend-java.git'
+                    url = 'https://github.com/ekddigital/ekdsend-java'
+                }
+            }
+        }
+    }
+}
